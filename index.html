@@ -1,82 +1,291 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>रणथंभौर सफारी बुकिंग डेस्क</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Ranthambore Safari Booking Desk</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-dark: #121212;
+            --bg-card: #1e1e1e;
+            --bg-card-hover: #282828;
+            --gold: #e5a93c;
+            --gold-hover: #c99028;
+            --text-main: #f1f1f1;
+            --text-muted: #a0a0a0;
+            --border-color: #333333;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: var(--bg-dark); color: var(--text-main); line-height: 1.6; }
+
+        /* Navigation Bar */
+        header { background: #000; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid var(--border-color); }
+        .logo { font-size: 20px; font-weight: 800; color: var(--gold); text-transform: uppercase; letter-spacing: 1px; display: flex; align-items: center; gap: 8px; }
+        .nav-btn { background: var(--gold); color: #000; text-decoration: none; padding: 10px 22px; border-radius: 4px; font-weight: 700; font-size: 14px; text-transform: uppercase; transition: 0.3s; }
+        .nav-btn:hover { background: var(--gold-hover); }
+
+        /* Hero Banner */
+        .hero { 
+            position: relative;
+            background: linear-gradient(180deg, rgba(0,0,0,0.7) 0%, rgba(18,18,18,1) 100%), 
+                        url('https://images.unsplash.com/photo-1561731216-c3a4d99437d5?auto=format&fit=crop&q=80&w=1200') center/cover no-repeat; 
+            padding: 80px 20px 120px 20px; 
+            text-align: center; 
+        }
+        .hero h1 { font-size: 38px; color: #fff; font-weight: 800; margin-bottom: 15px; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
+        .hero p { max-width: 750px; margin: 0 auto 25px auto; color: var(--text-muted); font-size: 15px; }
+        
+        .btn-gold { background: var(--gold); color: #000; border: none; padding: 12px 28px; font-weight: 700; border-radius: 4px; cursor: pointer; text-transform: uppercase; text-decoration: none; display: inline-block; transition: 0.3s; }
+        .btn-gold:hover { background: var(--gold-hover); }
+
+        /* Booking Bar Widget */
+        .booking-widget-wrapper { max-width: 1100px; margin: -60px auto 50px auto; padding: 0 20px; position: relative; z-index: 10; }
+        .booking-widget { background: var(--bg-card); border: 1px solid var(--border-color); padding: 20px; border-radius: 8px; display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .widget-field { flex: 1 1 180px; }
+        .widget-field label { display: block; font-size: 12px; color: var(--gold); font-weight: 600; margin-bottom: 5px; text-transform: uppercase; }
+        .widget-field input, .widget-field select { width: 100%; background: #121212; border: 1px solid var(--border-color); color: #fff; padding: 10px; border-radius: 4px; font-size: 14px; outline: none; }
+        .widget-field input:focus, .widget-field select:focus { border-color: var(--gold); }
+        .widget-btn { flex: 1 1 180px; height: 42px; }
+
+        /* Section Global Layout */
+        .section-container { max-width: 1100px; margin: 60px auto; padding: 0 20px; text-align: center; }
+        .sub-heading { color: var(--gold); font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 8px; }
+        .main-heading { font-size: 28px; font-weight: 700; margin-bottom: 15px; color: #fff; }
+        .description { color: var(--text-muted); max-width: 800px; margin: 0 auto 30px auto; font-size: 14px; }
+
+        /* Stats Grid */
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; background: var(--bg-card); padding: 30px; border-radius: 8px; border: 1px solid var(--border-color); margin-top: 40px; }
+        .stat-item h3 { font-size: 36px; color: var(--gold); font-weight: 800; }
+        .stat-item p { font-size: 13px; color: var(--text-muted); text-transform: uppercase; }
+
+        /* Image Cards Grid */
+        .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; margin-top: 30px; }
+        .card { background: var(--bg-card); border-radius: 8px; overflow: hidden; border: 1px solid var(--border-color); text-align: left; transition: transform 0.3s; }
+        .card:hover { transform: translateY(-5px); border-color: var(--gold); }
+        .card img { width: 100%; height: 200px; object-fit: cover; }
+        .card-content { padding: 20px; }
+        .card-content h4 { font-size: 18px; color: var(--gold); margin-bottom: 8px; }
+        .card-content p { font-size: 13px; color: var(--text-muted); }
+
+        /* Accordion Tigers Section */
+        .accordion { max-width: 800px; margin: 30px auto 0 auto; text-align: left; }
+        .accordion-item { background: var(--bg-card); border: 1px solid var(--border-color); margin-bottom: 10px; border-radius: 6px; overflow: hidden; }
+        .accordion-header { padding: 15px 20px; font-weight: 700; color: #fff; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+        .accordion-header:hover { color: var(--gold); }
+        .accordion-content { padding: 15px 20px; color: var(--text-muted); font-size: 14px; border-top: 1px solid var(--border-color); display: none; background: #181818; }
+
+        /* Footer */
+        footer { background: #080808; border-top: 1px solid var(--border-color); padding: 50px 20px 20px 20px; margin-top: 80px; text-align: left; }
+        .footer-grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; padding-bottom: 30px; border-bottom: 1px solid var(--border-color); }
+        .footer-col h4 { color: var(--gold); font-size: 16px; margin-bottom: 15px; text-transform: uppercase; }
+        .footer-col p, .footer-col li { font-size: 13px; color: var(--text-muted); margin-bottom: 8px; list-style: none; }
+        .footer-col a { color: var(--text-muted); text-decoration: none; transition: 0.2s; }
+        .footer-col a:hover { color: var(--gold); }
+        .footer-bottom { max-width: 1100px; margin: 20px auto 0 auto; text-align: center; font-size: 12px; color: #666; }
+    </style>
 </head>
-<body class="bg-gray-100 font-sans">
-    <header class="bg-amber-800 text-white p-6 shadow-md">
-        <div class="container mx-auto flex justify-between items-center">
-            <h1 class="text-3xl font-bold">रणथंभौर सफारी बुकिंग डेस्क</h1>
-        </div>
+<body>
+
+    <!-- Header Navigation -->
+    <header>
+        <div class="logo"><i class="fa-solid fa-paw"></i> Wildlife Safari Desk</div>
+        <a href="tel:+917014165902" class="nav-btn">Call Now</a>
     </header>
 
-    <main class="container mx-auto my-10 p-6 bg-white rounded-lg shadow-lg">
-        <section id="booking" class="max-w-2xl mx-auto">
-            <h2 class="text-2xl font-bold mb-6 text-center text-gray-800">सफारी बुकिंग फॉर्म</h2>
-            <form id="whatsappForm" class="space-y-4">
-                <div>
-                    <label class="block text-gray-700 font-medium mb-2">पूरा नाम</label>
-                    <input type="text" id="name" required class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500" placeholder="आपका नाम">
-                </div>
-                <div>
-                    <label class="block text-gray-700 font-medium mb-2">ईमेल एड्रेस</label>
-                    <input type="email" id="email" required class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500" placeholder="आपका ईमेल">
-                </div>
-                <div>
-                    <label class="block text-gray-700 font-medium mb-2">सफारी की तारीख</label>
-                    <input type="date" id="safari_date" required class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500">
-                </div>
-                <div>
-                    <label class="block text-gray-700 font-medium mb-2">शिफ्ट चुनें</label>
-                    <select id="shift" class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500">
-                        <option value="मॉर्निंग">मॉर्निंग शिफ्ट</option>
-                        <option value="इवनिंग">इवनिंग शिफ्ट</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-gray-700 font-medium mb-2">वाहन चुनें</label>
-                    <select id="vehicle" class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500">
-                        <option value="जीप">जीप</option>
-                        <option value="कैंटर">कैंटर</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-gray-700 font-medium mb-2">यात्रियों की संख्या</label>
-                    <input type="number" id="guests" min="1" required class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500" placeholder="यात्रियों की कुल संख्या">
-                </div>
-                <div>
-                    <label class="block text-gray-700 font-medium mb-2">आईडी प्रूफ की जानकारी</label>
-                    <input type="text" id="id_proof" required class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500" placeholder="आईडी नंबर">
-                </div>
-                <button type="button" onclick="sendToWhatsApp()" class="w-full bg-amber-600 text-white p-4 rounded-lg font-bold hover:bg-amber-700 transition duration-200">व्हाट्सएप पर डिटेल्स भेजें</button>
-            </form>
-        </section>
-    </main>
+    <!-- Hero Banner -->
+    <section class="hero">
+        <h1>Ranthambore Safari Booking Online</h1>
+        <p>Experience thrilling safaris, iconic wildlife, and the historical charm of Ranthambore National Park with instant confirmation.</p>
+        <a href="#booking-widget" class="btn-gold">Book Safari</a>
+    </section>
 
+    <!-- Quick Booking Form Bar -->
+    <div class="booking-widget-wrapper" id="booking-widget">
+        <form class="booking-widget" id="whatsappForm">
+            <div class="widget-field">
+                <label>Safari Date</label>
+                <input type="date" id="safari_date" required>
+            </div>
+            <div class="widget-field">
+                <label>Safari Vehicle</label>
+                <select id="vehicle">
+                    <option value="Jeep / Gypsy (6 Seater)">Jeep / Gypsy</option>
+                    <option value="Canter (20 Seater)">Canter</option>
+                </select>
+            </div>
+            <div class="widget-field">
+                <label>Shift</label>
+                <select id="shift">
+                    <option value="Morning">Morning Shift</option>
+                    <option value="Evening">Evening Shift</option>
+                </select>
+            </div>
+            <div class="widget-field">
+                <label>Phone / WhatsApp</label>
+                <input type="tel" id="phone" placeholder="Enter Phone No." required>
+            </div>
+            <button type="button" onclick="sendToWhatsApp()" class="btn-gold widget-btn">Go to Booking</button>
+        </form>
+    </div>
+
+    <!-- Why Choose Us -->
+    <section class="section-container">
+        <div class="sub-heading">Why Choose Us</div>
+        <h2 class="main-heading">Experience the Wilderness of Ranthambore</h2>
+        <p class="description">With over a decade of expertise, we specialize in crafting personalized travel experiences to Ranthambore National Park. Our deep understanding ensures seamless planning and expert guidance.</p>
+
+        <!-- Stats Counter -->
+        <div class="stats-grid">
+            <div class="stat-item">
+                <h3>10+</h3>
+                <p>Years of Expertise</p>
+            </div>
+            <div class="stat-item">
+                <h3>4,784+</h3>
+                <p>Satisfied Travelers</p>
+            </div>
+            <div class="stat-item">
+                <h3>94%</h3>
+                <p>Positive Reviews</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sawai Madhopur Tourist Places Section -->
+    <section class="section-container">
+        <div class="sub-heading">Explore Sawai Madhopur</div>
+        <h2 class="main-heading">Top Places to Visit in Sawai Madhopur</h2>
+        <p class="description">Apart from the tiger safari, Sawai Madhopur offers rich heritage, ancient temples, and picturesque lakes for travelers.</p>
+
+        <div class="cards-grid">
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?auto=format&fit=crop&q=80&w=600" alt="Ranthambore Fort">
+                <div class="card-content">
+                    <h4>Ranthambore Fort</h4>
+                    <p>Located inside the national park, this 10th-century UNESCO World Heritage site offers majestic views of the entire tiger reserve forest.</p>
+                </div>
+            </div>
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&q=80&w=600" alt="Trinetra Ganesh Temple">
+                <div class="card-content">
+                    <h4>Trinetra Ganesh Temple</h4>
+                    <p>Situated atop Ranthambore Fort, this famous 3-eyed Lord Ganesha temple is one of the oldest and most revered shrines in Rajasthan.</p>
+                </div>
+            </div>
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&q=80&w=600" alt="Surwal Lake">
+                <div class="card-content">
+                    <h4>Surwal Lake & Bird Watching</h4>
+                    <p>A serene seasonal lake near Sawai Madhopur, perfect for morning sunrises and observing migratory birds like flamingos and cranes.</p>
+                </div>
+            </div>
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1561731216-c3a4d99437d5?auto=format&fit=crop&q=80&w=600" alt="Jogi Mahal">
+                <div class="card-content">
+                    <h4>Jogi Mahal & Banyan Tree</h4>
+                    <p>An ancient royal hunting lodge situated on Padam Talao lake, home to India's second largest iconic Banyan Tree.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Famous Tigers Accordion -->
+    <section class="section-container">
+        <div class="sub-heading">Icons of the Jungle</div>
+        <h2 class="main-heading">Famous Tigers Of Ranthambore</h2>
+
+        <div class="accordion">
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <span>1. MACHALI (T-16)</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </div>
+                <div class="accordion-content">
+                    Machali, the most famous tigress of Ranthambore, was known as the "Queen of Ranthambore". Her iconic battle with a 14-foot crocodile remains legendary.
+                </div>
+            </div>
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <span>2. SUNDARI (T-17)</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </div>
+                <div class="accordion-content">
+                    Daughter of Machali, Sundari ruled the lakes area of Ranthambore for years and was widely photographed by wildlife enthusiasts worldwide.
+                </div>
+            </div>
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <span>3. ARROWHEAD (T-84)</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </div>
+                <div class="accordion-content">
+                    Granddaughter of Machali, Arrowhead is named after the arrow-shaped mark on her left cheek and dominates the core lake zone.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <div class="logo" style="margin-bottom: 15px;"><i class="fa-solid fa-paw"></i> Wildlife Safari</div>
+                <p>Dedicated to providing memorable and safe safari experiences at Ranthambore Tiger Reserve & Sawai Madhopur tours.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Contact Us</h4>
+                <p><i class="fa-solid fa-phone" style="color:var(--gold);"></i> +91 7014165902</p>
+                <p><i class="fa-solid fa-envelope" style="color:var(--gold);"></i> info@ranthamboresafari.com</p>
+                <p><i class="fa-solid fa-location-dot" style="color:var(--gold);"></i> Sawai Madhopur, Rajasthan 322001</p>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Safari Booking</a></li>
+                <li><a href="#">Sawai Madhopur Places</a></li>
+                <li><a href="#">Terms & Conditions</a></li>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 Ranthambore Wildlife Safari Desk. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript Logic -->
     <script>
+        function toggleAccordion(element) {
+            const content = element.nextElementSibling;
+            const isOpen = content.style.display === "block";
+            
+            document.querySelectorAll('.accordion-content').forEach(item => item.style.display = 'none');
+            
+            if(!isOpen) {
+                content.style.display = "block";
+            }
+        }
+
         function sendToWhatsApp() {
-            var name = document.getElementById("name").value;
-            var email = document.getElementById("email").value;
             var date = document.getElementById("safari_date").value;
-            var shift = document.getElementById("shift").value;
             var vehicle = document.getElementById("vehicle").value;
-            var guests = document.getElementById("guests").value;
-            var idProof = document.getElementById("id_proof").value;
+            var shift = document.getElementById("shift").value;
+            var phone = document.getElementById("phone").value;
 
-            var phoneNumber = "917014065909"; 
+            if(!date || !phone) {
+                alert("Please enter Safari Date and Phone Number.");
+                return;
+            }
 
-            var message = "नमस्ते, मैं सफारी बुक करना चाहता हूँ।\n\n" +
-                          "नाम: " + name + "\n" +
-                          "ईमेल: " + email + "\n" +
-                          "तारीख: " + date + "\n" +
-                          "शिफ्ट: " + shift + "\n" +
-                          "वाहन: " + vehicle + "\n" +
-                          "यात्री: " + guests + "\n" +
-                          "आईडी प्रूफ: " + idProof;
+            var message = "*New Safari Booking Inquiry*\n\n" +
+                "📅 *Date:* " + date + "\n" +
+                "🚜 *Vehicle:* " + vehicle + "\n" +
+                "⏰ *Shift:* " + shift + "\n" +
+                "📞 *Customer Phone:* " + phone;
 
-            var whatsappUrl = "https://api.whatsapp.com/send?phone=" + 7014065909+ "&text=" + encodeURIComponent(message);
-            window.open(w
-                        
+            var whatsappURL = "https://wa.me/917014165902?text=" + encodeURIComponent(message);
+            window.open(whatsappURL, "_blank");
+        }
+    </script>
+</body>
+</html>
