@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>रणथंभौर सफारी बुकिंग डेस्क</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans">
+    <header class="bg-amber-800 text-white p-6 shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-3xl font-bold">रणथंभौर सफारी बुकिंग डेस्क</h1>
+        </div>
+    </header>
+
+    <main class="container mx-auto my-10 p-6 bg-white rounded-lg shadow-lg">
+        <section id="booking" class="max-w-2xl mx-auto">
+            <h2 class="text-2xl font-bold mb-6 text-center text-gray-800">सफारी बुकिंग फॉर्म</h2>
+            <form id="whatsappForm" class="space-y-4">
+                <div>
+                    <label class="block text-gray-700 font-medium mb-2">पूरा नाम</label>
+                    <input type="text" id="name" required class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500" placeholder="आपका नाम">
+                </div>
+                <div>
+                    <label class="block text-gray-700 font-medium mb-2">ईमेल एड्रेस</label>
+                    <input type="email" id="email" required class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500" placeholder="आपका ईमेल">
+                </div>
+                <div>
+                    <label class="block text-gray-700 font-medium mb-2">सफारी की तारीख</label>
+                    <input type="date" id="safari_date" required class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500">
+                </div>
+                <div>
+                    <label class="block text-gray-700 font-medium mb-2">शिफ्ट चुनें</label>
+                    <select id="shift" class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500">
+                        <option value="मॉर्निंग">मॉर्निंग शिफ्ट</option>
+                        <option value="इवनिंग">इवनिंग शिफ्ट</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-gray-700 font-medium mb-2">वाहन चुनें</label>
+                    <select id="vehicle" class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500">
+                        <option value="जीप">जीप</option>
+                        <option value="कैंटर">कैंटर</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-gray-700 font-medium mb-2">यात्रियों की संख्या</label>
+                    <input type="number" id="guests" min="1" required class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500" placeholder="यात्रियों की कुल संख्या">
+                </div>
+                <div>
+                    <label class="block text-gray-700 font-medium mb-2">आईडी प्रूफ की जानकारी</label>
+                    <input type="text" id="id_proof" required class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500" placeholder="आईडी नंबर">
+                </div>
+                <button type="button" onclick="sendToWhatsApp()" class="w-full bg-amber-600 text-white p-4 rounded-lg font-bold hover:bg-amber-700 transition duration-200">व्हाट्सएप पर डिटेल्स भेजें</button>
+            </form>
+        </section>
+    </main>
+
+    <script>
+        function sendToWhatsApp() {
+            var name = document.getElementById("name").value;
+            var email = document.getElementById("email").value;
+            var date = document.getElementById("safari_date").value;
+            var shift = document.getElementById("shift").value;
+            var vehicle = document.getElementById("vehicle").value;
+            var guests = document.getElementById("guests").value;
+            var idProof = document.getElementById("id_proof").value;
+
+            var phoneNumber = "917014065909"; 
+
+            var message = "नमस्ते, मैं सफारी बुक करना चाहता हूँ।\n\n" +
+                          "नाम: " + name + "\n" +
+                          "ईमेल: " + email + "\n" +
+                          "तारीख: " + date + "\n" +
+                          "शिफ्ट: " + shift + "\n" +
+                          "वाहन: " + vehicle + "\n" +
+                          "यात्री: " + guests + "\n" +
+                          "आईडी प्रूफ: " + idProof;
+
+            var whatsappUrl = "https://api.whatsapp.com/send?phone=" + 7014065909+ "&text=" + encodeURIComponent(message);
+            window.open(whatsappUrl, "_blank");
+        }
+    </script>
+</body>
+  </html>
+  var phoneNumber = "917014065909";
+  
