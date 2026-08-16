@@ -301,4 +301,60 @@
                     <h4>Deluxe Hotels & Haveli Stays</h4>
                     <p>Comfortable rooms with modern amenities, swimming pools, garden lawns, and traditional Rajasthani food close to Ranthambore Road.</p>
                     <a href="tel:+917014065909" class="btn-gold" style="padding: 8px 16px; font-size: 12px;">Enquire Stays</a>
+                      <!-- Footer Section -->
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>About Desk</h4>
+                <p>Official guide and booking desk for Ranthambore Tiger Reserve safari tours, gypsy/canter booking, and luxury resort stays.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Contact</h4>
+                <div class="contact-item"><i class="fa-solid fa-phone"></i> +91 7014065909</div>
+                <div class="contact-item"><i class="fa-solid fa-location-dot"></i> Sawai Madhopur, Rajasthan</div>
+            </div>
+        </div>
+        <div class="disclaimer-box">
+            Disclaimer: All safari bookings and forest entry permissions are subject to the guidelines issued by the Forest Department of Rajasthan.
+        </div>
+        <div class="footer-bottom">
+            &copy; 2026 Ranthambore Safari Booking Desk. All Rights Reserved.
+        </div>
+    </footer>
+
+    <!-- WhatsApp Form Submit Script -->
+    <script>
+        function sendToWhatsApp() {
+            var date = document.getElementById('safari_date').value;
+            var vehicle = document.getElementById('vehicle').value;
+            var shift = document.getElementById('shift').value;
+            var visitors = document.getElementById('visitors').value;
+            var userPhone = document.getElementById('phone').value;
+
+            if (!date) {
+                alert("Please select a safari date.");
+                return;
+            }
+            if (!userPhone) {
+                alert("Please enter your Phone/WhatsApp number.");
+                return;
+            }
+
+            var businessNumber = "917014065909";
+
+            var message = "Hello, I want to book a Ranthambore Safari.\n\n" +
+                          "📅 Date: " + date + "\n" +
+                          "🚙 Vehicle: " + vehicle + "\n" +
+                          "⏰ Shift: " + shift + "\n" +
+                          "👥 Visitors: " + visitors + "\n" +
+                          "📞 Contact: " + userPhone;
+
+            var encodedMessage = encodeURIComponent(message);
+            var whatsappURL = "https://wa.me/" + businessNumber + "?text=" + encodedMessage;
+
+            window.open(whatsappURL, '_blank');
+        }
+    </script>
+</body>
+                </html>
        
